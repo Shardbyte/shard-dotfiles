@@ -87,10 +87,6 @@ plugins=(
 # -------------------- Prompt -------------------- #
 
 
-compinit
-autoload -Uz compinit
-autoload -Uz bracketed-paste-magic
-
 # Permission when creating files
 umask 0077
 
@@ -219,6 +215,10 @@ LISTMAX=10000
 
 # -------------------- Resolutions -------------------- #
 
+
+compinit
+autoload -Uz compinit
+autoload -Uz bracketed-paste-magic
 
 # Revert from default .zshrc
 if [ -f "$HOME/.zshrc.pre-oh-my-zsh" ]; then
