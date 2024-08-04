@@ -216,8 +216,8 @@ LISTMAX=10000
 # -------------------- Resolutions -------------------- #
 
 
-compinit
 autoload -Uz compinit
+compinit
 autoload -Uz bracketed-paste-magic
 
 # Revert from default .zshrc
