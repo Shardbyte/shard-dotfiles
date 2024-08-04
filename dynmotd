@@ -1,0 +1,130 @@
+#!/usr/bin/env bash
+###########################
+#                         #
+#  Saint @ Shardbyte.com  #
+#                         #
+###########################
+# Copyright (c) 2023-2024 Shardbyte
+# Author: Shardbyte (Saint)
+# License: MIT
+# https://github.com/Shardbyte/shard-dotfiles/raw/master/LICENSE
+######  BEGIN FILE  ###### ######  BEGIN FILE  ###### ######  BEGIN FILE  ######
+# ----- Shardbyte Dynamic MOTD -----
+#
+#
+#
+
+
+# -------------------- Variables -------------------- #
+
+
+YW=$(echo "\033[33m")        # Yellow Text
+GN=$(echo "\033[1;92m")      # Green Text
+CL=$(echo "\033[m")          # Reset Text
+USER=$(whoami)
+NEOFETCH_USER_CONFIG="/home/$USER/.config/neofetch/config.conf"
+NEOFETCH_ROOT_CONFIG="/root/.config/neofetch/config.conf"
+
+# Time of day (UTC)
+HOUR=$(date +"%H")
+if [ "$HOUR" -lt 12 ]; then
+    TIME="Morning"
+elif [ "$HOUR" -lt 17 ]; then
+    TIME="Afternoon"
+else
+    TIME="Evening"
+fi
+
+
+# -------------------- Output -------------------- #
+
+
+check_user() {
+    if [ "$EUID" -eq 0 ]; then
+        is_root
+    else
+        not_root
+    fi
+}
+
+
+is_root() {
+clear
+echo ""
+case "$TIME" in
+  "Morning")
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Good Morning $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━━━━━━╯${CL}"
+    ;;
+  "Afternoon")
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Good Afternoon $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━━━━━━━━╯${CL}"
+    ;;
+  "Evening")
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Good Evening $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━━━━━━╯${CL}"
+    ;;
+  *)
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Welcome $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━╯${CL}"
+esac
+echo ""
+ROOT_MESSAGE=$(neofetch --config "$NEOFETCH_ROOT_CONFIG")
+echo -e " $ROOT_MESSAGE"
+}
+
+
+not_root() {
+clear
+echo ""
+case "$TIME" in
+  "Morning")
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Good Morning $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━━━━━━━╯${CL}"
+    ;;
+  "Afternoon")
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Good Afternoon $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━━━━━━━━━╯${CL}"
+    ;;
+  "Evening")
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Good Evening $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━━━━━━━╯${CL}"
+    ;;
+  *)
+    echo -e "
+    ${CL}${YW}╭━━━━━━━━━━━━━━━━━━━━━╮${CL}
+ ${CL}${YW}┗━━╋━${CL}  ${GN}Welcome $USER  ${CL}${YW}━╋━━┛${CL}
+    ${CL}${YW}╰━━━━━━━━━━━━━━━━━━━━━╯${CL}"
+esac
+echo ""
+USER_MESSAGE=$(neofetch --config "$NEOFETCH_USER_CONFIG")
+echo -e " $USER_MESSAGE"
+}
+
+
+check_user
+
+
+RULES="${CL}${YW}
+  ::::::::::::::::::::::::::::::::::-RULES-::::::::::::::::::::::::::::::::::
+    This is a private system that you are not to give out access to anyone
+   without permission from the admin. Keep it OS (OldSkool) and Stay Frosty.
+                    ⚡⚡  THE SHARDBYTE COLLECTIVE  ⚡⚡"
+echo -e " $RULES${CL}\n"
+#
+#
+######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
