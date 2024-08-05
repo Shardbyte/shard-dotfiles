@@ -19,7 +19,7 @@
 local return_code="%(?..%{$fg[magenta]%}%? ↵%{$reset_color%})"
 local user_host="%B%(!.%{$fg[red]%}.%{$fg[green]%})%n@%m%{$reset_color%} "
 local user_symbol='%(!.».➤)'
-local current_dir="%B%{$fg[blue]%}%~ %{$reset_color%}"
+local current_dir="%B%{$fg[magenta]%}%~ %{$reset_color%}"
 
 
 local vcs_branch='$(git_prompt_info)$(hg_prompt_info)'
