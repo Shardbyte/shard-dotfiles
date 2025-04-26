@@ -70,7 +70,6 @@ fi
 
 plugins=(
   git
-  eza
   nmap
   sudo
   docker
@@ -122,19 +121,8 @@ zstyle ':completion:*:descriptions' format '[%d]'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 # force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
 zstyle ':completion:*' menu no
-# preview directory's content with eza when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
-
-
-# -------------------- Styles -------------------- #
-
-
-zstyle ':omz:plugins:eza' 'dirs-first' yes
-zstyle ':omz:plugins:eza' 'header' yes
-zstyle ':omz:plugins:eza' 'show-group' yes
-zstyle ':omz:plugins:eza' 'icons' no
 
 
 # -------------------- Fixes -------------------- #
