@@ -4,7 +4,7 @@
 #  Saint @ Shardbyte.com  #
 #                         #
 ###########################
-# Copyright (c) 2023-2024 Shardbyte
+# Copyright (c) 2023-2025 Shardbyte
 # Author: Shardbyte (Saint)
 # License: MIT
 # https://github.com/Shardbyte/shard-dotfiles/raw/master/LICENSE
