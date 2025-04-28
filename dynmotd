@@ -22,8 +22,8 @@ YW=$(echo "\033[33m")        # Yellow Text
 GN=$(echo "\033[1;92m")      # Green Text
 CL=$(echo "\033[m")          # Reset Text
 USER=$(whoami)
-NEOFETCH_USER_CONFIG="/home/$USER/.config/fastfetch/config.jsonc"
-NEOFETCH_ROOT_CONFIG="/root/.config/fastfetch/config.jsonc"
+FASTFETCH_USER_CONFIG="/home/$USER/.config/fastfetch/config.jsonc"
+FASTFETCH_ROOT_CONFIG="/root/.config/fastfetch/config.jsonc"
 
 # Time of day (UTC)
 HOUR=$(date +"%H")
