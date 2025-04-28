@@ -120,10 +120,10 @@ check_user
 
 
 RULES="${CL}${YW}
-          ::::::::::::::::::::::::::::::::::-RULES-::::::::::::::::::::::::::::::::::
-            This is a private system that you are not to give out access to anyone
-           without permission from the admin. Keep it OS (OldSkool) and Stay Frosty.
-                            ⚡⚡  THE SHARDBYTE COLLECTIVE  ⚡⚡"
+        ::::::::::::::::::::::::::::::::::-RULES-::::::::::::::::::::::::::::::::::
+          This is a private system that you are not to give out access to anyone
+         without permission from the admin. Keep it OS (OldSkool) and Stay Frosty.
+                          ⚡⚡  THE SHARDBYTE COLLECTIVE  ⚡⚡"
 echo -e " $RULES${CL}\n"
 #
 #
