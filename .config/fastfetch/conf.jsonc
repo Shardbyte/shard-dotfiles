@@ -1,0 +1,155 @@
+//###########################
+//#                         #
+//#  Saint @ Shardbyte.com  #
+//#                         #
+//###########################
+// Copyright (c) 2023-2025 Shardbyte
+// Author: Shardbyte (Saint)
+// License: MIT
+// https://github.com/Shardbyte/shard-dotfiles/raw/master/LICENSE
+//######  BEGIN FILE  ###### ######  BEGIN FILE  ###### ######  BEGIN FILE  ######
+// ----- Shardbyte Fastfetch -----
+//
+//
+//
+//
+
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+  "logo": {
+    "padding": {
+      "top": 3,
+      "left": 3
+    }
+  },
+  "display": {
+    "separator": "",
+    "size": {
+      "binaryPrefix": "jedec"
+    },
+    "constants": [
+      // CONSTANT {$1} - COLOR BLUE
+      "\u001b[38;5;74;48m",
+      // CONSTANT {$2} - COLOR BRIGHT BLUE
+      "\u001b[38;5;117;48m",
+      // CONSTANT {$3} - COLOR PURPLE
+      "\u001b[38;5;141;48m"
+    ]
+    },
+  "modules": [
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{$1}╭──────────────────── {$2}Software{$1} ────────────────────"
+    },
+    {
+      "type": "os",
+      "key": "{$1}│{#} {$3}OS         \u001b[38;5;117;48m▶ ",
+      "format": "{pretty-name}"
+    },
+    {
+      "type": "kernel",
+      "key": "{$1}│{#} {$3}Kernel     \u001b[38;5;117;48m▶ ",
+      "format": "{release}"
+    },
+    {
+      "type": "packages",
+      "key": "{$1}│{#} {$3}Packages   \u001b[38;5;117;48m▶ ",
+      "format": "{all}"
+    },
+    {
+      "type": "shell",
+      "key": "{$1}│{#} {$3}Shell      \u001b[38;5;117;48m▶ ",
+      "format": "{process-name} {version}"
+    },
+    {
+      "type": "de",
+      "key": "{$1}│{#} {$3}DE         \u001b[38;5;117;48m▶ ",
+      "format": "{pretty-name} {version}"
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{$1}├──────────────────── {$2}Hardware{$1} ────────────────────"
+    },
+    {
+      "type": "cpu",
+      "key": "{$1}│{#} {$3}CPU        \u001b[38;5;117;48m▶ ",
+      "format": "{name} ({cores-physical}C) @ {freq-base}"
+    },
+    {
+      "type": "gpu",
+      "key": "{$1}│{#} {$3}GPU        \u001b[38;5;117;48m▶ ",
+      "detectionMethod": "auto",
+      "format": "{name} {dedicated-total} {driver}"
+    },
+    {
+      "type": "memory",
+      "key": "{$1}│{#} {$3}Memory     \u001b[38;5;117;48m▶ ",
+      "format": "{used} / {total} ({percentage})"
+    },
+    {
+      "type": "disk",
+      "key": "{$1}│{#} {$3}Disk       \u001b[38;5;117;48m▶ ",
+      "format": "{size-used} / {size-total} ({size-percentage})"
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{$1}├─────────────────── {$2}Connection{$1} ───────────────────"
+    },
+    {
+      "type": "localip",
+      "key": "{$1}│{#} {$3}Local IP   \u001b[38;5;117;48m▶ ",
+      "showPrefixLen": false,
+      "format": "{ipv4}"
+    },
+    {
+      "type": "publicip",
+      "key": "{$1}│{#} {$3}Public IP  \u001b[38;5;117;48m▶ ",
+      "format": "{ip}"
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{$1}├───────────────────── {$2}Uptime{$1} ─────────────────────"
+    },
+    {
+      "type": "uptime",
+      "key": "{$1}│{#} {$3}Uptime     \u001b[38;5;117;48m▶ ",
+      "format": "{?days}{days} Days & {?}{hours} Hours {minutes} Minutes {seconds} Seconds"
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": "{$1}╰──────────────────────────────────────────────────"
+    }
+  ]
+}
+
+//######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
