@@ -18,12 +18,29 @@
 # Custom Theme
 ZSH_THEME="shardbyte"
 
+
 # Check if oh-my-zsh is installed
 zsh_installed="$HOME/.oh-my-zsh/"
 if [ ! -d "$zsh_installed" ]; then
   echo "Installing oh-my-zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
+
+
+# Set correct locale
+set_locale() {
+  current_locale=$(locale | grep "^LC_ALL=" | cut -d= -f2 | tr -d '"')
+
+  # Fallback to LANG if LC_ALL is not explicitly set
+  if [ -z "$current_locale" ]; then
+    current_locale=$(locale | grep "^LANG=" | cut -d= -f2 | tr -d '"')
+  fi
+
+  if [ "$current_locale" != "C.UTF-8" ]; then
+    export LC_ALL="C.UTF-8"
+    export LANG="C.UTF-8"
+  fi
+}
 
 
 # -------------------- ZSH Plugins -------------------- #
@@ -244,5 +261,5 @@ source $ZSH/custom/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 # "Launch" ZSH-syntaxHighlighting
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 #
-#
+set_locale
 ######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
