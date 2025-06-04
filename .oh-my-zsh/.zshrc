@@ -208,6 +208,11 @@ alias grep='grep --color=auto'
 alias df='df -h' # disk free, in Gigabytes, not bytes
 alias du='du -h -c' # calculate disk usage for a folder
 
+# Quick Docker Aliases
+alias dkl='docker logs --follow'
+alias dkr='docker restart'
+alias dks='docker stop'
+
 
 # -------------------- History -------------------- #
 
