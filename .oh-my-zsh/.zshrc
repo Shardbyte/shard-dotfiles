@@ -21,7 +21,6 @@ unsetopt GLOBAL_RCS
 
 # -------------------- Configuration Variables -------------------- #
 
-readonly ZSHRC_VERSION="2.0.0"
 readonly OH_MY_ZSH_DIR="$HOME/.oh-my-zsh"
 readonly ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$OH_MY_ZSH_DIR/custom}"
 
@@ -465,16 +464,6 @@ psfind() {
     ps aux | grep -i "$1" | grep -v grep
 }
 
-# Quick weather check (if curl is available)
-weather() {
-    local location="${1:-}"
-    if command_exists curl; then
-        curl -s "wttr.in/$location?format=3"
-    else
-        echo "curl not available for weather check"
-    fi
-}
-
 # -------------------- Shell Integration -------------------- #
 
 # Change default shell to zsh if not already set
@@ -529,9 +518,6 @@ cleanup_old_config() {
 # Initialize everything
 init_zsh_config
 cleanup_old_config
-
-# Load any local customizations
-safe_source "$HOME/.zshrc.local"
 
 # Performance: compile zshrc for faster loading
 if [[ ! -f "$HOME/.zshrc.zwc" || "$HOME/.zshrc" -nt "$HOME/.zshrc.zwc" ]]; then
