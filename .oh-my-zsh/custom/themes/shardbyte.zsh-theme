@@ -35,7 +35,7 @@ color256[reset]="%f"
 
 # -------------------- Variables -------------------- #
 local return_code="%(?..${color256[magenta]}%? ↵${color256[reset]})"
-local user_host="%B%(!.${color256[red]}.${color256[green]})%n@%m${color256[reset]} "
+local user_host="%B%(!.${color256[red]}.${color256[green]})%n${color256[white]}@${color256[reset]}%m${color256[reset]} "
 local user_symbol='%(!.».➤)'
 local current_dir="%B${color256[magenta]}%~ ${color256[reset]}"
 local vcs_branch='$(git_prompt_info)$(hg_prompt_info)'
