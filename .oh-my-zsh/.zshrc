@@ -19,13 +19,27 @@
 # Disable global RCS files for faster startup
 unsetopt GLOBAL_RCS
 
+# Performance optimizations
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
+
+# Lazy loading for better performance
+autoload -Uz add-zsh-hook
+
+# Skip verification of insecure directories
+ZSH_DISABLE_COMPFIX=true
+
 # -------------------- Configuration Variables -------------------- #
 
 readonly OH_MY_ZSH_DIR="$HOME/.oh-my-zsh"
 readonly ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$OH_MY_ZSH_DIR/custom}"
 
-# Custom Theme
+# Custom Theme with Nerd Font support
 ZSH_THEME="shardbyte"
+
+# Nerd Font configuration
+export USE_NERD_FONTS=true
+export NERD_FONT_FAMILY="JetBrainsMono NFM"
 
 # -------------------- Utility Functions -------------------- #
 
@@ -67,12 +81,12 @@ download_file() {
             log "ERROR" "Neither curl nor wget found"
             return 1
         fi
-        
+
         log "WARN" "Download attempt $attempt failed, retrying..."
         ((attempt++))
         sleep 2
     done
-    
+
     log "ERROR" "Failed to download $url after $max_attempts attempts"
     return 1
 }
@@ -81,12 +95,12 @@ download_file() {
 clone_repo() {
     local repo_url="$1"
     local dest_dir="$2"
-    
+
     if ! command_exists git; then
         log "ERROR" "Git is not installed"
         return 1
     fi
-    
+
     if git clone --depth=1 --quiet "$repo_url" "$dest_dir" 2>/dev/null; then
         return 0
     else
@@ -137,7 +151,7 @@ install_plugin() {
     local plugin_name="$1"
     local repo_url="$2"
     local plugin_dir="$ZSH_CUSTOM_DIR/plugins/$plugin_name"
-    
+
     if [[ ! -d "$plugin_dir" ]]; then
         log "INFO" "Installing $plugin_name..."
         mkdir -p "$ZSH_CUSTOM_DIR/plugins"
@@ -150,7 +164,7 @@ install_theme() {
     local theme_name="$1"
     local theme_url="$2"
     local theme_file="$ZSH_CUSTOM_DIR/themes/$theme_name.zsh-theme"
-    
+
     if [[ ! -f "$theme_file" ]]; then
         log "INFO" "Installing $theme_name theme..."
         mkdir -p "$ZSH_CUSTOM_DIR/themes"
@@ -162,12 +176,15 @@ install_theme() {
 setup_plugins() {
     # Install custom theme
     install_theme "shardbyte" "https://raw.githubusercontent.com/Shardbyte/shard-dotfiles/master/.oh-my-zsh/custom/themes/shardbyte.zsh-theme"
-    
-    # Install plugins
+
+    # Install enhanced plugins
     install_plugin "zsh-completions" "https://github.com/zsh-users/zsh-completions"
     install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
     install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
     install_plugin "fzf-tab" "https://github.com/Aloxaf/fzf-tab"
+    install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
+    install_plugin "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting"
+    install_plugin "zsh-autopair" "https://github.com/hlissner/zsh-autopair"
 }
 
 # -------------------- Plugin Configuration -------------------- #
@@ -181,7 +198,13 @@ plugins=(
     command-not-found
     zsh-autosuggestions
     zsh-syntax-highlighting
+    fast-syntax-highlighting
+    zsh-history-substring-search
+    zsh-autopair
     fzf-tab
+    colored-man-pages
+    extract
+    history
 )
 
 # Conditionally add plugins based on available commands
@@ -304,6 +327,22 @@ export VISUAL="${VISUAL:-$EDITOR}"
 export PAGER="${PAGER:-less}"
 export LESS="${LESS:--R -M --shift 5}"
 
+# Language and locale
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
+# History configuration
+export HISTCONTROL="ignoreboth:erasedups"
+export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+
+# FZF configuration
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border --inline-info"
+export FZF_DEFAULT_COMMAND="find . -type f -not -path '*/\.git/*' 2>/dev/null"
+
+# Modern tool configurations
+export BAT_THEME="Dracula"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # System detection
 if [[ -f /etc/os-release ]]; then
     export DISTRO=$(grep -oP '^ID=\K.*' /etc/os-release 2>/dev/null || echo "unknown")
@@ -380,6 +419,26 @@ alias free='free -h'
 alias ps='ps auxf'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 
+# Modern alternatives
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+
+# Quick access
+alias zshconfig="$EDITOR ~/.zshrc"
+alias reload='source ~/.zshrc'
+
+# System monitoring
+alias top='htop'
+alias ports='netstat -tuln'
+alias mount='mount | column -t'
+
+# Quick navigation with icons
+alias cdh='cd ~'
+alias cdt='cd /tmp'
+alias cdv='cd /var'
+alias cde='cd /etc'
+
 # Docker aliases (if docker is available)
 if command_exists docker; then
     alias dkl='docker logs --follow'
@@ -391,6 +450,7 @@ if command_exists docker; then
     alias dkrmi='docker rmi'
     alias dkrm='docker rm'
     alias dke='docker exec -it'
+    alias dksp='docker system prune -a --volumes'
 fi
 
 # Git aliases (enhanced)
@@ -464,6 +524,13 @@ psfind() {
     ps aux | grep -i "$1" | grep -v grep
 }
 
+# Enhanced file search with fzf
+ff() {
+    local file
+    file=$(find . -type f 2>/dev/null | fzf --preview 'bat --color=always --style=header,grid --line-range :300 {}')
+    [[ -n "$file" ]] && $EDITOR "$file"
+}
+
 # -------------------- Shell Integration -------------------- #
 
 # Change default shell to zsh if not already set
@@ -480,24 +547,38 @@ change_shell_to_zsh() {
 init_zsh_config() {
     # Set locale first
     set_locale
-    
+
     # Install oh-my-zsh if needed
     install_oh_my_zsh
-    
+
     # Setup plugins and themes
     setup_plugins
-    
+
     # Export ZSH path
     export ZSH="$OH_MY_ZSH_DIR"
-    
+
     # Source oh-my-zsh
     safe_source "$ZSH/oh-my-zsh.sh"
-    
+
     # Source plugins manually (for reliability)
     safe_source "$ZSH_CUSTOM_DIR/plugins/fzf-tab/fzf-tab.plugin.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
-    
+    safe_source "$ZSH_CUSTOM_DIR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+    safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
+    safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-autopair/autopair.zsh"
+
+    # Configure plugin settings
+    ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
+    ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+    ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+    # History substring search bindings
+    bindkey '^[[A' history-substring-search-up
+    bindkey '^[[B' history-substring-search-down
+    bindkey -M vicmd 'k' history-substring-search-up
+    bindkey -M vicmd 'j' history-substring-search-down
+
     # Change shell if needed
     change_shell_to_zsh
 }

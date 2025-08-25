@@ -13,28 +13,37 @@
 //
 //
 //
-
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
+    "type": "file",
+    "source": "/opt/shard-conf/configs/shardbyte-logo.txt",
+    "width": 65,
+    "height": 35,
     "padding": {
-      "left": 3
+      "top": 2,
+      "left": 4,
+      "right": 4
+    },
+    "color": {
+      "1": "white"
     }
   },
   "display": {
     "separator": "",
     "size": {
-      "binaryPrefix": "jedec"
+      "binaryPrefix": "jedec",
+      "ndigits": 2
     },
     "constants": [
-      // CONSTANT {$1} - COLOR BLUE
-      "\u001b[38;5;74;48m",
-      // CONSTANT {$2} - COLOR BRIGHT BLUE
-      "\u001b[38;5;117;48m",
-      // CONSTANT {$3} - COLOR PURPLE
-      "\u001b[38;5;141;48m"
+      // CONSTANT {$1} - COLOR CYAN (Borders)
+      "\u001b[38;5;117m",
+      // CONSTANT {$2} - COLOR GREEN (Accents)
+      "\u001b[1;92m",
+      // CONSTANT {$3} - COLOR PURPLE (Highlights)
+      "\u001b[38;5;141m"
     ]
-    },
+  },
   "modules": [
     {
       "type": "custom",
@@ -57,34 +66,44 @@
       "format": " "
     },
     {
-      "type": "custom",
+      "type": "title",
       "key": " ",
+      "format": "{$1}╭─ {$2}{user-name-colored}{at-symbol-colored}{host-name-colored} {$1}"
+    },
+    {
+      "type": "custom",
+      "key": "{$1}│{#}",
       "format": " "
     },
     {
       "type": "custom",
       "key": " ",
-      "format": "{$1}╭──────────────────── {$2}Software{$1} ────────────────────"
+      "format": "{$1}├─────────────────── {$2}System{$1} ─────────────────────"
     },
     {
       "type": "os",
-      "key": "{$1}│{#} {$3}OS         \u001b[38;5;117;48m▶ ",
-      "format": "{pretty-name}"
+      "key": "{$1}│{#} {$3}OS         \u001b[38;5;117m▶ ",
+      "format": "{pretty-name} {version-id}"
     },
     {
       "type": "kernel",
-      "key": "{$1}│{#} {$3}Kernel     \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}Kernel     \u001b[38;5;117m▶ ",
       "format": "{release}"
     },
     {
+      "type": "shell",
+      "key": "{$1}│{#} {$3}Shell      \u001b[38;5;117m▶ ",
+      "format": "{process-name} {version}"
+    },
+    {
       "type": "packages",
-      "key": "{$1}│{#} {$3}Packages   \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}Packages   \u001b[38;5;117m▶ ",
       "format": "{all}"
     },
     {
-      "type": "shell",
-      "key": "{$1}│{#} {$3}Shell      \u001b[38;5;117;48m▶ ",
-      "format": "{process-name} {version}"
+      "type": "processes",
+      "key": "{$1}│{#} {$3}Processes  \u001b[38;5;117m▶ ",
+      "format": "{1}"
     },
     {
       "type": "de",
@@ -92,9 +111,14 @@
       "format": "{pretty-name} {version}"
     },
     {
+      "type": "uptime",
+      "key": "{$1}│{#} {$3}Uptime     \u001b[38;5;117m▶ ",
+      "format": "{?days}{days}d {?}{hours}h {minutes}m"
+    },
+    {
       "type": "custom",
       "key": " ",
-      "format": "{$1}├──────────────────── {$2}Hardware{$1} ────────────────────"
+      "format": "{$1}├─────────────────── {$2}Hardware{$1} ─────────────────────"
     },
     {
       "type": "cpu",
@@ -110,17 +134,27 @@
     {
       "type": "memory",
       "key": "{$1}│{#} {$3}Memory     \u001b[38;5;117;48m▶ ",
-      "format": "{used} / {total} ({percentage})"
+      "format": "{used} / {total} ({percentage})",
+      "percent": {
+        "type": 9,
+        "green": 50,
+        "yellow": 80
+      }
     },
     {
       "type": "disk",
       "key": "{$1}│{#} {$3}Disk       \u001b[38;5;117;48m▶ ",
-      "format": "{size-used} / {size-total} ({size-percentage})"
+      "format": "{size-used} / {size-total} ({size-percentage})",
+      "percent": {
+        "type": 9,
+        "green": 60,
+        "yellow": 85
+      }
     },
     {
       "type": "custom",
       "key": " ",
-      "format": "{$1}├─────────────────── {$2}Connection{$1} ───────────────────"
+      "format": "{$1}├─────────────────── {$2}Network{$1} ─────────────────────"
     },
     {
       "type": "localip",
@@ -134,21 +168,23 @@
       "format": "{ip}"
     },
     {
-      "type": "custom",
-      "key": " ",
-      "format": "{$1}├───────────────────── {$2}Uptime{$1} ─────────────────────"
-    },
-    {
-      "type": "uptime",
-      "key": "{$1}│{#} {$3}Uptime     \u001b[38;5;117;48m▶ ",
-      "format": "{?days}{days} Days & {?}{hours} Hours {minutes} Minutes {seconds} Seconds"
+      "type": "dns",
+      "key": "{$1}│{#} {$3}DNS        \u001b[38;5;117;48m▶ ",
+      "format": "{1}"
     },
     {
       "type": "custom",
       "key": " ",
-      "format": "{$1}╰──────────────────────────────────────────────────"
+      "format": "{$1}╰─────────────────────────────────────────────────"
+    },
+    {
+      "type": "custom",
+      "key": " ",
+      "format": " "
     }
   ]
 }
+
+
 
 //######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
