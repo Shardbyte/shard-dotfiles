@@ -11,8 +11,6 @@
 // ----- Shardbyte Fastfetch -----
 //
 //
-//
-//
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
   "logo": {
@@ -36,12 +34,12 @@
       "ndigits": 2
     },
     "constants": [
-      // CONSTANT {$1} - COLOR CYAN (Borders)
-      "\u001b[38;5;117m",
-      // CONSTANT {$2} - COLOR GREEN (Accents)
-      "\u001b[1;92m",
-      // CONSTANT {$3} - COLOR PURPLE (Highlights)
-      "\u001b[38;5;141m"
+      // CONSTANT {$1} - COLOR TEAL (Borders) - Teal
+      "\u001b[38;2;139;213;202m",
+      // CONSTANT {$2} - COLOR GREEN (Accents) - Green
+      "\u001b[38;2;166;218;149m",
+      // CONSTANT {$3} - COLOR MAUVE (Highlights) - Purple
+      "\u001b[38;2;198;160;246m"
     ]
   },
   "modules": [
@@ -181,10 +179,12 @@
       "type": "custom",
       "key": " ",
       "format": " "
+    },
+    {
+      "type": "colors",
+      "paddingLeft": 6,
+      "symbol": "circle"
     }
   ]
 }
-
-
-
 //######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######

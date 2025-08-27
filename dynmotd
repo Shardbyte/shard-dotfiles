@@ -17,16 +17,16 @@
 
 # -------------------- Variables -------------------- #
 
-# Color definitions
-YW=$(echo "\033[33m")        # Yellow Text
-GN=$(echo "\033[1;92m")      # Green Text
-RD=$(echo "\033[1;91m")      # Red Text
-BL=$(echo "\033[1;94m")      # Blue Text
-MG=$(echo "\033[1;95m")      # Magenta Text
-CY=$(echo "\033[1;96m")      # Cyan Text
-PR=$(echo "\033[38;5;141m")  # Purple Text
-CL=$(echo "\033[m")          # Reset Text
-BD=$(echo "\033[1m")         # Bold Text
+# Color definitions - Custom Theme
+YW=$(echo "\033[38;2;238;212;159m")     # Yellow Text
+GN=$(echo "\033[38;2;166;218;149m")     # Green Text
+RD=$(echo "\033[38;2;237;135;150m")     # Red Text
+BL=$(echo "\033[38;2;138;173;244m")     # Blue Text
+MG=$(echo "\033[38;2;198;160;246m")     # Magenta Text
+CY=$(echo "\033[38;2;139;213;202m")     # Cyan Text
+PR=$(echo "\033[38;2;198;160;246m")     # Purple Text
+CL=$(echo "\033[0m")                    # Reset Text
+BD=$(echo "\033[1m")                    # Bold Text
 
 # System variables
 USER=$(whoami)
