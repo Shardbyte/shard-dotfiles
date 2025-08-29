@@ -53,13 +53,25 @@ check_user() {
 print_root_motd() {
     clear
     echo ""
-    fastfetch --config "$FASTFETCH_ROOT_CONFIG" 2>/dev/null || echo "Fastfetch not available"
+    local LOGIN_SHELL
+    LOGIN_SHELL=$(getent passwd root | cut -d: -f7)
+    export TERM=xterm-256color
+    export COLORTERM=truecolor
+    export FORCE_COLOR=1
+    export SHELL="$LOGIN_SHELL"
+    fastfetch --color-output --config "$FASTFETCH_ROOT_CONFIG" 2>/dev/null || echo "Fastfetch not available"
 }
 
 print_user_motd() {
     clear
     echo ""
-    fastfetch --config "$FASTFETCH_USER_CONFIG" 2>/dev/null || echo "Fastfetch not available"
+    local LOGIN_SHELL
+    LOGIN_SHELL=$(getent passwd "$USER" | cut -d: -f7)
+    export TERM=xterm-256color
+    export COLORTERM=truecolor
+    export FORCE_COLOR=1
+    export SHELL="$LOGIN_SHELL"
+    fastfetch --color-output --config "$FASTFETCH_USER_CONFIG" 2>/dev/null || echo "Fastfetch not available"
 }
 # -------------------- Main Execution -------------------- #
 

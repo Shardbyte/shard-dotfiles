@@ -180,7 +180,6 @@ setup_plugins() {
     # Install enhanced plugins
     install_plugin "zsh-completions" "https://github.com/zsh-users/zsh-completions"
     install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
-    install_plugin "zsh-syntax-highlighting" "https://github.com/zsh-users/zsh-syntax-highlighting"
     install_plugin "fzf-tab" "https://github.com/Aloxaf/fzf-tab"
     install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
     install_plugin "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting"
@@ -197,7 +196,6 @@ plugins=(
     aliases
     command-not-found
     zsh-autosuggestions
-    zsh-syntax-highlighting
     fast-syntax-highlighting
     zsh-history-substring-search
     zsh-autopair
@@ -563,7 +561,6 @@ init_zsh_config() {
     # Source plugins manually (for reliability)
     safe_source "$ZSH_CUSTOM_DIR/plugins/fzf-tab/fzf-tab.plugin.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-    safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-autopair/autopair.zsh"
