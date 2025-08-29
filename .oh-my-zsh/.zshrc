@@ -31,6 +31,9 @@ ZSH_DISABLE_COMPFIX=true
 
 # -------------------- Configuration Variables -------------------- #
 
+readonly OH_MY_ZSH_DIR="$HOME/.oh-my-zsh"
+readonly ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$OH_MY_ZSH_DIR/custom}"
+
 # Custom Theme with Nerd Font support
 ZSH_THEME="shardbyte"
 
@@ -151,9 +154,13 @@ install_plugin() {
 
     if [[ ! -d "$plugin_dir" ]]; then
         log "INFO" "Installing $plugin_name..."
-        sudo mkdir -p "$ZSH_CUSTOM_DIR/plugins"
-        clone_repo "$repo_url" "$plugin_dir"
-        sudo chown -R $USER:$USER "$ZSH_CUSTOM_DIR"
+        mkdir -p "$ZSH_CUSTOM_DIR/plugins"
+        clone_repo "$repo_url" "$plugin_dir" || {
+            log "WARN" "Failed to install plugin: $plugin_name"
+            return 1
+        }
+        # Ensure proper ownership
+        chown -R "$USER:$USER" "$ZSH_CUSTOM_DIR" 2>/dev/null || true
     fi
 }
 
@@ -165,9 +172,28 @@ install_theme() {
 
     if [[ ! -f "$theme_file" ]]; then
         log "INFO" "Installing $theme_name theme..."
-        sudo mkdir -p "$ZSH_CUSTOM_DIR/themes"
-        download_file "$theme_url" "$theme_file"
-        sudo chown -R $USER:$USER "$ZSH_CUSTOM_DIR"
+        mkdir -p "$ZSH_CUSTOM_DIR/themes"
+        
+        # Try to download with better error handling
+        if command_exists curl; then
+            curl -fsSL --create-dirs --output "$theme_file" "$theme_url" || {
+                log "WARN" "Failed to download theme, using local fallback"
+                return 1
+            }
+        elif command_exists wget; then
+            wget -q --timeout=30 --tries=1 "$theme_url" -O "$theme_file" || {
+                log "WARN" "Failed to download theme, using local fallback" 
+                return 1
+            }
+        else
+            log "WARN" "Neither curl nor wget found, skipping theme download"
+            return 1
+        fi
+        
+        # Ensure proper ownership
+        if [[ -f "$theme_file" ]]; then
+            chown "$USER:$USER" "$theme_file" 2>/dev/null || true
+        fi
     fi
 }
 
