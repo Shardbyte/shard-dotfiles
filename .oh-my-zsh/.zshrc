@@ -151,8 +151,9 @@ install_plugin() {
 
     if [[ ! -d "$plugin_dir" ]]; then
         log "INFO" "Installing $plugin_name..."
-        mkdir -p "$ZSH_CUSTOM_DIR/plugins"
+        sudo mkdir -p "$ZSH_CUSTOM_DIR/plugins"
         clone_repo "$repo_url" "$plugin_dir"
+        sudo chown -R $USER:$USER "$ZSH_CUSTOM_DIR"
     fi
 }
 
@@ -164,8 +165,9 @@ install_theme() {
 
     if [[ ! -f "$theme_file" ]]; then
         log "INFO" "Installing $theme_name theme..."
-        mkdir -p "$ZSH_CUSTOM_DIR/themes"
+        sudo mkdir -p "$ZSH_CUSTOM_DIR/themes"
         download_file "$theme_url" "$theme_file"
+        sudo chown -R $USER:$USER "$ZSH_CUSTOM_DIR"
     fi
 }
 
