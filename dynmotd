@@ -53,17 +53,13 @@ check_user() {
 print_root_motd() {
     clear
     echo ""
-
-    ROOT_MESSAGE=$(fastfetch --config "$FASTFETCH_ROOT_CONFIG" 2>/dev/null)
-    echo -e " $ROOT_MESSAGE"
+    fastfetch --config "$FASTFETCH_ROOT_CONFIG" 2>/dev/null || echo "Fastfetch not available"
 }
 
 print_user_motd() {
     clear
     echo ""
-
-    USER_MESSAGE=$(fastfetch --config "$FASTFETCH_USER_CONFIG" 2>/dev/null)
-    echo -e " $USER_MESSAGE"
+    fastfetch --config "$FASTFETCH_USER_CONFIG" 2>/dev/null || echo "Fastfetch not available"
 }
 # -------------------- Main Execution -------------------- #
 
@@ -77,18 +73,18 @@ main() {
 
 print_rules() {
     RULES="${CL}
-    ${BD}${CY}╔══════════════════════════════════════════════════════════════════════════════╗${CL}
-    ${BD}${CY}║                            ${GN}⚡ ${PR}SECURITY NOTICE  ${GN}⚡                            ${BD}${CY}║${CL}
-    ${BD}${CY}╠══════════════════════════════════════════════════════════════════════════════╣${CL}
-    ${BD}${CY}║                                                                              ║${CL}
-    ${BD}${CY}║  ${PR}▶${CL} ${BD}Private Infrastructure${CL} ${GN}│${CL} Authorized personnel only                        ${BD}${CY}║${CL}
-    ${BD}${CY}║  ${PR}▶${CL} ${BD}Monitored Environment${CL}  ${GN}│${CL} All activities are logged                        ${BD}${CY}║${CL}
-    ${BD}${CY}║  ${PR}▶${CL} ${BD}Secure Sessions Only${CL}   ${GN}│${CL} Use proper authentication methods                ${BD}${CY}║${CL}
-    ${BD}${CY}║  ${PR}▶${CL} ${BD}Clean Exit Required${CL}    ${GN}│${CL} Log out properly when finished                   ${BD}${CY}║${CL}
-    ${BD}${CY}║                                                                              ║${CL}
-    ${BD}${CY}╠══════════════════════════════════════════════════════════════════════════════╣${CL}
-    ${BD}${CY}║${CL}                 ${BD}${GN}${ICON_LIGHTNING}${PR} SHARDBYTE COLLECTIVE SECURE OPERATIONS  ${GN}${ICON_LIGHTNING}                ${BD}${CY}║${CL}
-    ${BD}${CY}╚══════════════════════════════════════════════════════════════════════════════╝${CL}"
+            ${BD}${CY}╔══════════════════════════════════════════════════════════════════════════════╗${CL}
+            ${BD}${CY}║                            ${GN}⚡ ${PR}SECURITY NOTICE  ${GN}⚡                            ${BD}${CY}║${CL}
+            ${BD}${CY}╠══════════════════════════════════════════════════════════════════════════════╣${CL}
+            ${BD}${CY}║                                                                              ║${CL}
+            ${BD}${CY}║  ${PR}▶${CL} ${BD}Private Infrastructure${CL} ${GN}│${CL} Authorized personnel only                        ${BD}${CY}║${CL}
+            ${BD}${CY}║  ${PR}▶${CL} ${BD}Monitored Environment${CL}  ${GN}│${CL} All activities are logged                        ${BD}${CY}║${CL}
+            ${BD}${CY}║  ${PR}▶${CL} ${BD}Secure Sessions Only${CL}   ${GN}│${CL} Use proper authentication methods                ${BD}${CY}║${CL}
+            ${BD}${CY}║  ${PR}▶${CL} ${BD}Clean Exit Required${CL}    ${GN}│${CL} Log out properly when finished                   ${BD}${CY}║${CL}
+            ${BD}${CY}║                                                                              ║${CL}
+            ${BD}${CY}╠══════════════════════════════════════════════════════════════════════════════╣${CL}
+            ${BD}${CY}║${CL}                 ${BD}${GN}${ICON_LIGHTNING}${PR} SHARDBYTE COLLECTIVE SECURE OPERATIONS  ${GN}${ICON_LIGHTNING}                ${BD}${CY}║${CL}
+            ${BD}${CY}╚══════════════════════════════════════════════════════════════════════════════╝${CL}"
     echo -e "$RULES${CL}\n"
 }
 

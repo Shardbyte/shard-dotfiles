@@ -16,8 +16,8 @@
   "logo": {
     "type": "file",
     "source": "/opt/shard-conf/configs/shardbyte-logo.txt",
-    "width": 65,
-    "height": 35,
+    "width": 10,
+    "height": 5,
     "padding": {
       "top": 2,
       "left": 4,

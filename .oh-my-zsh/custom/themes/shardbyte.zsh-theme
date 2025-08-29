@@ -14,14 +14,14 @@
 #
 #
 # -------------------- Color Variables -------------------- #
-local color_purple='%{\033[38;2;198;160;246m%}'      # Purple/Mauve
-local color_green='%{\033[38;2;166;218;149m%}'       # Green
-local color_yellow='%{\033[38;2;238;212;159m%}'      # Yellow
-local color_cyan='%{\033[38;2;139;213;202m%}'        # Teal/Cyan
-local color_blue='%{\033[38;2;138;173;244m%}'        # Blue
-local color_red='%{\033[38;2;237;135;150m%}'         # Red
-local color_white='%{\033[38;2;202;211;245m%}'       # Text White
-local color_reset='%{\033[0m%}'
+local color_purple='%{%F{#c6a0f6}%}'      # Purple/Mauve
+local color_green='%{%F{#a6da95}%}'       # Green
+local color_yellow='%{%F{#eed49f}%}'      # Yellow
+local color_cyan='%{%F{#8bd5ca}%}'        # Teal/Cyan
+local color_blue='%{%F{#8aadf4}%}'        # Blue
+local color_red='%{%F{#ed8796}%}'         # Red
+local color_white='%{%F{#cad3f5}%}'       # Text White
+local color_reset='%{%f%}'
 # -------------------- Variables -------------------- #
 local return_code="%(?..${color_red}%? ↵${color_reset})"
 local user_host="%B%(!.${color_red}.${color_purple})%n@%m${color_reset} "
@@ -32,7 +32,7 @@ local vcs_branch='$(git_prompt_info)$(hg_prompt_info)'
 # -------------------- Prompt Format Settings-------------------- #
 PROMPT="╭─${user_host}${current_dir}${vcs_branch}
 ╰─%B${user_symbol}%b ${return_code}"
-RPROMPT="${color_green}⚡ ${color_purple}󰌾 ${color_cyan}$(hostname -I | awk '{print $1}') ${color_reset}"
+RPROMPT="${color_purple}󰌾 ${color_cyan}$(hostname -I | awk '{print $1}') ${color_reset}"
 
 
 # -------------------- Git Prompt Settings -------------------- #
