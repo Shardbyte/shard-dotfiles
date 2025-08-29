@@ -181,42 +181,24 @@ setup_plugins() {
     install_plugin "zsh-completions" "https://github.com/zsh-users/zsh-completions"
     install_plugin "zsh-autosuggestions" "https://github.com/zsh-users/zsh-autosuggestions"
     install_plugin "fzf-tab" "https://github.com/Aloxaf/fzf-tab"
-    install_plugin "zsh-history-substring-search" "https://github.com/zsh-users/zsh-history-substring-search"
     install_plugin "fast-syntax-highlighting" "https://github.com/zdharma-continuum/fast-syntax-highlighting"
     install_plugin "zsh-autopair" "https://github.com/hlissner/zsh-autopair"
+    install_plugin "zsh-bat" "https://github.com/fdellwing/zsh-bat"
 }
 
 # -------------------- Plugin Configuration -------------------- #
 
 # Define plugins array
 plugins=(
-    git
     sudo
-    docker
-    aliases
     command-not-found
     zsh-autosuggestions
     fast-syntax-highlighting
-    zsh-history-substring-search
     zsh-autopair
     fzf-tab
-    colored-man-pages
-    extract
-    history
+    zsh-bat
+    eza
 )
-
-# Conditionally add plugins based on available commands
-if command_exists nmap; then
-    plugins+=(nmap)
-fi
-
-if command_exists docker-compose || command_exists docker; then
-    plugins+=(docker-compose)
-fi
-
-if command_exists firewall-cmd; then
-    plugins+=(firewalld)
-fi
 
 # -------------------- Zsh Options -------------------- #
 
@@ -237,7 +219,7 @@ setopt APPEND_HISTORY           # Append to history file
 setopt INC_APPEND_HISTORY       # Append commands immediately
 
 # Completion options
-setopt COMPLETE_ALIASES         # Complete aliases
+setopt COMPLETE_ALIASES        # Complete aliases
 setopt AUTO_LIST               # List choices on ambiguous completion
 setopt AUTO_MENU               # Use menu completion
 setopt COMPLETE_IN_WORD        # Complete from both ends of word
@@ -250,7 +232,6 @@ setopt PUSHD_IGNORE_DUPS       # Don't push duplicates
 setopt PUSHD_SILENT            # Don't print directory stack
 
 # Miscellaneous options
-setopt CORRECT                 # Correct misspelled commands
 setopt NO_BEEP                 # Disable beep
 setopt MULTIOS                 # Allow multiple redirections
 setopt PROMPT_SUBST            # Allow parameter expansion in prompts
@@ -287,13 +268,6 @@ zstyle ':completion:*:descriptions' format '%B%F{blue}%d%f%b'
 zstyle ':completion:*:messages' format '%F{green}%d%f'
 zstyle ':completion:*:warnings' format '%F{red}No matches for: %d%f'
 zstyle ':completion:*' group-name ''
-
-# Docker completion
-zstyle ':completion:*:*:docker:*' option-stacking yes
-zstyle ':completion:*:*:docker-*:*' option-stacking yes
-
-# Git completion optimizations
-zstyle ':completion:*:git-checkout:*' sort false
 
 # FZF-tab configuration
 zstyle ':completion:*:descriptions' format '[%d]'
@@ -364,19 +338,6 @@ path=(
 
 # -------------------- Aliases -------------------- #
 
-# Detect bat command variant
-if command_exists batcat; then
-    alias cat="batcat"
-    alias c="batcat -n"
-    alias catp="batcat --plain"
-    alias cdiff="batcat --diff"
-elif command_exists bat; then
-    alias cat="bat"
-    alias c="bat -n"
-    alias catp="bat --plain"
-    alias cdiff="bat --diff"
-fi
-
 # Core aliases
 alias sudo="sudo "
 alias s="sudo "
@@ -384,15 +345,6 @@ alias s="sudo "
 # Network utilities
 alias locip="hostname -I | awk '{print \$1}'"
 alias pubip="curl -s https://ip.shardbyte.com 2>/dev/null && echo || echo 'Failed to get public IP'"
-
-# File operations
-alias mkdir="mkdir -p"
-alias cl='clear'
-alias l='ls -lh'
-alias la='ls -la'
-alias lla='ls -lha'
-alias ll='ls -alF'
-alias tree='tree -C'
 
 # Safety aliases
 alias rm="rm -iv"
@@ -405,7 +357,6 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
-alias -- -='cd -'
 
 # Enhanced commands
 alias grep='grep --color=auto'
@@ -417,27 +368,14 @@ alias free='free -h'
 alias ps='ps auxf'
 alias psg='ps aux | grep -v grep | grep -i -e VSZ -e'
 
-# Modern alternatives
-alias ls='ls --color=auto'
-alias dir='dir --color=auto'
-alias vdir='vdir --color=auto'
-
 # Quick access
 alias zshconfig="$EDITOR ~/.zshrc"
-alias reload='source ~/.zshrc'
 
 # System monitoring
 alias top='htop'
-alias ports='netstat -tuln'
 alias mount='mount | column -t'
 
-# Quick navigation with icons
-alias cdh='cd ~'
-alias cdt='cd /tmp'
-alias cdv='cd /var'
-alias cde='cd /etc'
-
-# Docker aliases (if docker is available)
+# Docker aliases
 if command_exists docker; then
     alias dkl='docker logs --follow'
     alias dkr='docker restart'
@@ -451,7 +389,7 @@ if command_exists docker; then
     alias dksp='docker system prune -a --volumes'
 fi
 
-# Git aliases (enhanced)
+# Git aliases
 if command_exists git; then
     alias gst='git status'
     alias gd='git diff'
@@ -474,13 +412,13 @@ case "$DISTRO" in
         alias search='apt search'
         alias show='apt show'
         ;;
-    fedora|rhel|centos)
+    fedora)
         alias install='sudo dnf install'
         alias update='sudo dnf update'
         alias search='dnf search'
         alias show='dnf info'
         ;;
-    arch|manjaro)
+    arch)
         alias install='sudo pacman -S'
         alias update='sudo pacman -Syu'
         alias search='pacman -Ss'
@@ -489,11 +427,6 @@ case "$DISTRO" in
 esac
 
 # -------------------- Custom Functions -------------------- #
-
-# Quick directory creation and navigation
-mkcd() {
-    mkdir -p "$1" && cd "$1"
-}
 
 # Extract various archive formats
 extract() {
@@ -558,23 +491,16 @@ init_zsh_config() {
     # Source oh-my-zsh
     safe_source "$ZSH/oh-my-zsh.sh"
 
-    # Source plugins manually (for reliability)
+    # Source plugins manually
     safe_source "$ZSH_CUSTOM_DIR/plugins/fzf-tab/fzf-tab.plugin.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-    safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh"
     safe_source "$ZSH_CUSTOM_DIR/plugins/zsh-autopair/autopair.zsh"
 
     # Configure plugin settings
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
     ZSH_AUTOSUGGEST_STRATEGY=(history completion)
     ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-
-    # History substring search bindings
-    bindkey '^[[A' history-substring-search-up
-    bindkey '^[[B' history-substring-search-down
-    bindkey -M vicmd 'k' history-substring-search-up
-    bindkey -M vicmd 'j' history-substring-search-down
 
     # Change shell if needed
     change_shell_to_zsh
