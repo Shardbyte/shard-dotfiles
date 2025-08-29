@@ -173,7 +173,7 @@ install_theme() {
     if [[ ! -f "$theme_file" ]]; then
         log "INFO" "Installing $theme_name theme..."
         mkdir -p "$ZSH_CUSTOM_DIR/themes"
-        
+
         # Try to download with better error handling
         if command_exists curl; then
             curl -fsSL --create-dirs --output "$theme_file" "$theme_url" || {
@@ -182,14 +182,14 @@ install_theme() {
             }
         elif command_exists wget; then
             wget -q --timeout=30 --tries=1 "$theme_url" -O "$theme_file" || {
-                log "WARN" "Failed to download theme, using local fallback" 
+                log "WARN" "Failed to download theme, using local fallback"
                 return 1
             }
         else
             log "WARN" "Neither curl nor wget found, skipping theme download"
             return 1
         fi
-        
+
         # Ensure proper ownership
         if [[ -f "$theme_file" ]]; then
             chown "$USER:$USER" "$theme_file" 2>/dev/null || true
