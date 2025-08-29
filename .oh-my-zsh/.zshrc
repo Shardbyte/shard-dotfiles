@@ -31,9 +31,6 @@ ZSH_DISABLE_COMPFIX=true
 
 # -------------------- Configuration Variables -------------------- #
 
-readonly OH_MY_ZSH_DIR="$HOME/.oh-my-zsh"
-readonly ZSH_CUSTOM_DIR="${ZSH_CUSTOM:-$OH_MY_ZSH_DIR/custom}"
-
 # Custom Theme with Nerd Font support
 ZSH_THEME="shardbyte"
 
@@ -196,9 +193,16 @@ plugins=(
     fast-syntax-highlighting
     zsh-autopair
     fzf-tab
-    zsh-bat
-    eza
 )
+
+# Conditionally add plugins based on available commands
+if command_exists eza; then
+    plugins+=(eza)
+fi
+
+if command_exists bat || command_exists batcat; then
+    plugins+=(zsh-bat)
+fi
 
 # -------------------- Zsh Options -------------------- #
 
@@ -219,22 +223,22 @@ setopt APPEND_HISTORY           # Append to history file
 setopt INC_APPEND_HISTORY       # Append commands immediately
 
 # Completion options
-setopt COMPLETE_ALIASES        # Complete aliases
-setopt AUTO_LIST               # List choices on ambiguous completion
-setopt AUTO_MENU               # Use menu completion
-setopt COMPLETE_IN_WORD        # Complete from both ends of word
-setopt ALWAYS_TO_END           # Move cursor to end after completion
+setopt COMPLETE_ALIASES         # Complete aliases
+setopt AUTO_LIST                # List choices on ambiguous completion
+setopt AUTO_MENU                # Use menu completion
+setopt COMPLETE_IN_WORD         # Complete from both ends of word
+setopt ALWAYS_TO_END            # Move cursor to end after completion
 
 # Directory options
-setopt AUTO_CD                 # Auto cd when typing directory name
-setopt AUTO_PUSHD              # Push directories onto stack
-setopt PUSHD_IGNORE_DUPS       # Don't push duplicates
-setopt PUSHD_SILENT            # Don't print directory stack
+setopt AUTO_CD                  # Auto cd when typing directory name
+setopt AUTO_PUSHD               # Push directories onto stack
+setopt PUSHD_IGNORE_DUPS        # Don't push duplicates
+setopt PUSHD_SILENT             # Don't print directory stack
 
 # Miscellaneous options
-setopt NO_BEEP                 # Disable beep
-setopt MULTIOS                 # Allow multiple redirections
-setopt PROMPT_SUBST            # Allow parameter expansion in prompts
+setopt NO_BEEP                  # Disable beep
+setopt MULTIOS                  # Allow multiple redirections
+setopt PROMPT_SUBST             # Allow parameter expansion in prompts
 
 # Permission when creating files
 umask 0077
@@ -243,7 +247,7 @@ umask 0077
 
 # Automatic ZSH Updates
 zstyle ':omz:update' mode auto
-zstyle ':omz:update' frequency 7
+zstyle ':omz:update' frequency 3
 zstyle ':omz:update' verbose default
 
 # -------------------- Completion System -------------------- #
@@ -392,16 +396,7 @@ fi
 # Git aliases
 if command_exists git; then
     alias gst='git status'
-    alias gd='git diff'
-    alias gdc='git diff --cached'
-    alias gl='git log --oneline --graph --decorate --all'
-    alias gco='git checkout'
-    alias gcb='git checkout -b'
-    alias gp='git push'
-    alias gpl='git pull'
-    alias ga='git add'
-    alias gc='git commit'
-    alias gcm='git commit -m'
+    alias gc='git clone'
 fi
 
 # System-specific aliases
@@ -527,5 +522,4 @@ cleanup_old_config
 if [[ ! -f "$HOME/.zshrc.zwc" || "$HOME/.zshrc" -nt "$HOME/.zshrc.zwc" ]]; then
     zcompile "$HOME/.zshrc" 2>/dev/null || true
 fi
-
 ######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
