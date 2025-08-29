@@ -479,6 +479,16 @@ ff() {
     [[ -n "$file" ]] && $EDITOR "$file"
 }
 
+# -------------------- Shell Integration -------------------- #
+
+# Change default shell to zsh if not already set
+change_shell_to_zsh() {
+    if [[ "$SHELL" != "$(which zsh)" ]] && command_exists zsh; then
+        log "INFO" "Changing default shell to zsh..."
+        chsh -s "$(which zsh)"
+    fi
+}
+
 # -------------------- Initialization -------------------- #
 
 # Main initialization function
@@ -499,6 +509,9 @@ init_zsh_config() {
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
     ZSH_AUTOSUGGEST_STRATEGY=(history completion)
     ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+    # Change shell if needed
+    change_shell_to_zsh
 }
 
 # -------------------- Cleanup -------------------- #
@@ -523,8 +536,9 @@ if [[ ! -f "$HOME/.zshrc.zwc" || "$HOME/.zshrc" -nt "$HOME/.zshrc.zwc" ]]; then
     zcompile "$HOME/.zshrc" 2>/dev/null || true
 fi
 
-if [[ $- == *i* ]]; then
-    [[ -x /etc/update-motd.d/00-header ]] && /etc/update-motd.d/00-header
-fi
+# MOTD is handled by PAM during SSH login - no need to call it here
+# if [[ $- == *i* ]]; then
+#     [[ -x /etc/update-motd.d/00-header ]] && /etc/update-motd.d/00-header
+# fi
 
 ######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
