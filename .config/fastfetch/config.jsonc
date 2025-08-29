@@ -39,7 +39,9 @@
       // CONSTANT {$2} - COLOR GREEN (Accents) - Green
       "\u001b[38;2;166;218;149m",
       // CONSTANT {$3} - COLOR MAUVE (Highlights) - Purple
-      "\u001b[38;2;198;160;246m"
+      "\u001b[38;2;198;160;246m",
+      // CONSTANT {$4} - COLOR LIGHT BLUE (Arrows) - Light Blue
+      "\u001b[38;5;117m"
     ]
   },
   "modules": [
@@ -69,9 +71,10 @@
       "format": "{$1}╭─ {$2}{user-name-colored}{at-symbol-colored}{host-name-colored} {$1}"
     },
     {
-      "type": "custom",
+      "type": "colors",
       "key": "{$1}│{#}",
-      "format": " "
+      "paddingLeft": 2,
+      "symbol": "circle"
     },
     {
       "type": "custom",
@@ -80,37 +83,37 @@
     },
     {
       "type": "os",
-      "key": "{$1}│{#} {$3}OS         \u001b[38;5;117m▶ ",
+      "key": "{$1}│{#} {$3}OS         {$4}▶ ",
       "format": "{pretty-name} {version-id}"
     },
     {
       "type": "kernel",
-      "key": "{$1}│{#} {$3}Kernel     \u001b[38;5;117m▶ ",
+      "key": "{$1}│{#} {$3}Kernel     {$4}▶ ",
       "format": "{release}"
     },
     {
       "type": "shell",
-      "key": "{$1}│{#} {$3}Shell      \u001b[38;5;117m▶ ",
+      "key": "{$1}│{#} {$3}Shell      {$4}▶ ",
       "format": "{process-name} {version}"
     },
     {
       "type": "packages",
-      "key": "{$1}│{#} {$3}Packages   \u001b[38;5;117m▶ ",
+      "key": "{$1}│{#} {$3}Packages   {$4}▶ ",
       "format": "{all}"
     },
     {
       "type": "processes",
-      "key": "{$1}│{#} {$3}Processes  \u001b[38;5;117m▶ ",
-      "format": "{1}"
+      "key": "{$1}│{#} {$3}Processes  {$4}▶ ",
+      "format": "{result}"
     },
     {
       "type": "de",
-      "key": "{$1}│{#} {$3}DE         \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}DE         {$4}▶ ",
       "format": "{pretty-name} {version}"
     },
     {
       "type": "uptime",
-      "key": "{$1}│{#} {$3}Uptime     \u001b[38;5;117m▶ ",
+      "key": "{$1}│{#} {$3}Uptime     {$4}▶ ",
       "format": "{?days}{days}d {?}{hours}h {minutes}m"
     },
     {
@@ -120,18 +123,18 @@
     },
     {
       "type": "cpu",
-      "key": "{$1}│{#} {$3}CPU        \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}CPU        {$4}▶ ",
       "format": "{name} ({cores-physical}C) @ {freq-base}"
     },
     {
       "type": "gpu",
-      "key": "{$1}│{#} {$3}GPU        \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}GPU        {$4}▶ ",
       "detectionMethod": "auto",
       "format": "{name} {dedicated-total} {driver}"
     },
     {
       "type": "memory",
-      "key": "{$1}│{#} {$3}Memory     \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}Memory     {$4}▶ ",
       "format": "{used} / {total} ({percentage})",
       "percent": {
         "type": 9,
@@ -141,7 +144,7 @@
     },
     {
       "type": "disk",
-      "key": "{$1}│{#} {$3}Disk       \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}Disk       {$4}▶ ",
       "format": "{size-used} / {size-total} ({size-percentage})",
       "percent": {
         "type": 9,
@@ -156,19 +159,19 @@
     },
     {
       "type": "localip",
-      "key": "{$1}│{#} {$3}Local IP   \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}Local IP   {$4}▶ ",
       "showPrefixLen": false,
       "format": "{ipv4}"
     },
     {
       "type": "publicip",
-      "key": "{$1}│{#} {$3}Public IP  \u001b[38;5;117;48m▶ ",
+      "key": "{$1}│{#} {$3}Public IP  {$4}▶ ",
       "format": "{ip}"
     },
     {
       "type": "dns",
-      "key": "{$1}│{#} {$3}DNS        \u001b[38;5;117;48m▶ ",
-      "format": "{1}"
+      "key": "{$1}│{#} {$3}DNS        {$4}▶ ",
+      "format": "{result}"
     },
     {
       "type": "custom",
@@ -179,11 +182,6 @@
       "type": "custom",
       "key": " ",
       "format": " "
-    },
-    {
-      "type": "colors",
-      "paddingLeft": 6,
-      "symbol": "circle"
     }
   ]
 }

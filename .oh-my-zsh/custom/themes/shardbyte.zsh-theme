@@ -14,14 +14,14 @@
 #
 #
 # -------------------- Color Variables -------------------- #
-local color_purple='%{\e[38;2;198;160;246m%}'      # Purple/Mauve
-local color_green='%{\e[38;2;166;218;149m%}'       # Green
-local color_yellow='%{\e[38;2;238;212;159m%}'      # Yellow
-local color_cyan='%{\e[38;2;139;213;202m%}'        # Teal/Cyan
-local color_blue='%{\e[38;2;138;173;244m%}'        # Blue
-local color_red='%{\e[38;2;237;135;150m%}'         # Red
-local color_white='%{\e[38;2;202;211;245m%}'       # Text White
-local color_reset='%{$reset_color%}'
+local color_purple='%{\033[38;2;198;160;246m%}'      # Purple/Mauve
+local color_green='%{\033[38;2;166;218;149m%}'       # Green
+local color_yellow='%{\033[38;2;238;212;159m%}'      # Yellow
+local color_cyan='%{\033[38;2;139;213;202m%}'        # Teal/Cyan
+local color_blue='%{\033[38;2;138;173;244m%}'        # Blue
+local color_red='%{\033[38;2;237;135;150m%}'         # Red
+local color_white='%{\033[38;2;202;211;245m%}'       # Text White
+local color_reset='%{\033[0m%}'
 # -------------------- Variables -------------------- #
 local return_code="%(?..${color_red}%? ↵${color_reset})"
 local user_host="%B%(!.${color_red}.${color_purple})%n@%m${color_reset} "
