@@ -55,6 +55,12 @@ command_exists() {
     command -v "$1" >/dev/null 2>&1
 }
 
+# Safe source function
+safe_source() {
+    local file="$1"
+    [[ -r "$file" ]] && source "$file" || log "WARN" "Could not source $file"
+}
+
 # Download file with retry logic
 download_file() {
     local url="$1"
@@ -505,13 +511,13 @@ init_zsh_config() {
     # Export ZSH path
     export ZSH="$OH_MY_ZSH_DIR"
 
+    # Source oh-my-zsh
+    safe_source "$ZSH/oh-my-zsh.sh"
+
     # Configure plugin settings
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#666666"
     ZSH_AUTOSUGGEST_STRATEGY=(history completion)
     ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
-
-    # Change shell if needed
-    change_shell_to_zsh
 }
 
 # -------------------- Cleanup -------------------- #
