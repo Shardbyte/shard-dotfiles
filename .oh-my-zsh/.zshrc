@@ -550,4 +550,9 @@ cleanup_old_config
 if [[ ! -f "$HOME/.zshrc.zwc" || "$HOME/.zshrc" -nt "$HOME/.zshrc.zwc" ]]; then
     zcompile "$HOME/.zshrc" 2>/dev/null || true
 fi
+
+if [[ $- == *i* ]]; then
+    [[ -x /etc/update-motd.d/00-header ]] && /etc/update-motd.d/00-header
+fi
+
 ######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
