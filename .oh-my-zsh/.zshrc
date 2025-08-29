@@ -542,9 +542,8 @@ if [[ ! -f "$HOME/.zshrc.zwc" || "$HOME/.zshrc" -nt "$HOME/.zshrc.zwc" ]]; then
     zcompile "$HOME/.zshrc" 2>/dev/null || true
 fi
 
-# MOTD is handled by PAM during SSH login - no need to call it here
-# if [[ $- == *i* ]]; then
-#     [[ -x /etc/update-motd.d/00-header ]] && /etc/update-motd.d/00-header
-# fi
+if [[ $- == *i* ]]; then
+    [[ -x /etc/update-motd.d/00-header ]] && /etc/update-motd.d/00-header
+fi
 
 ######  END FILE  ###### ######  END FILE  ###### ######  END FILE  ######
