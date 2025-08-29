@@ -21,7 +21,7 @@
 YW=$(echo "\033[38;2;238;212;159m")     # Yellow Text
 GN=$(echo "\033[38;2;166;218;149m")     # Green Text
 RD=$(echo "\033[38;2;237;135;150m")     # Red Text
-BL=$(echo "\033[38;2;138;173;244m")     # Blue Text
+BL=$(echo "\033[38;5;117m")             # Blue Text
 MG=$(echo "\033[38;2;198;160;246m")     # Magenta Text
 CY=$(echo "\033[38;2;139;213;202m")     # Cyan Text
 PR=$(echo "\033[38;2;198;160;246m")     # Purple Text
@@ -74,16 +74,16 @@ main() {
 print_rules() {
     RULES="${CL}
             ${BD}${CY}╔══════════════════════════════════════════════════════════════════════════════╗${CL}
-            ${BD}${CY}║                            ${GN}⚡ ${PR}SECURITY NOTICE  ${GN}⚡                            ${BD}${CY}║${CL}
+            ${BD}${CY}║                            ${BL}⚡ ${PR}SECURITY NOTICE  ${BL}⚡                            ${BD}${CY}║${CL}
             ${BD}${CY}╠══════════════════════════════════════════════════════════════════════════════╣${CL}
             ${BD}${CY}║                                                                              ║${CL}
-            ${BD}${CY}║  ${PR}▶${CL} ${BD}Private Infrastructure${CL} ${GN}│${CL} Authorized personnel only                        ${BD}${CY}║${CL}
-            ${BD}${CY}║  ${PR}▶${CL} ${BD}Monitored Environment${CL}  ${GN}│${CL} All activities are logged                        ${BD}${CY}║${CL}
-            ${BD}${CY}║  ${PR}▶${CL} ${BD}Secure Sessions Only${CL}   ${GN}│${CL} Use proper authentication methods                ${BD}${CY}║${CL}
-            ${BD}${CY}║  ${PR}▶${CL} ${BD}Clean Exit Required${CL}    ${GN}│${CL} Log out properly when finished                   ${BD}${CY}║${CL}
+            ${BD}${CY}║  ${BL}▶${CL} ${BD}Private Infrastructure${CL} ${BL}│${CL} Authorized personnel only                        ${BD}${CY}║${CL}
+            ${BD}${CY}║  ${BL}▶${CL} ${BD}Monitored Environment${CL}  ${BL}│${CL} All activities are logged                        ${BD}${CY}║${CL}
+            ${BD}${CY}║  ${BL}▶${CL} ${BD}Secure Sessions Only${CL}   ${BL}│${CL} Use proper authentication methods                ${BD}${CY}║${CL}
+            ${BD}${CY}║  ${BL}▶${CL} ${BD}Clean Exit Required${CL}    ${BL}│${CL} Log out properly when finished                   ${BD}${CY}║${CL}
             ${BD}${CY}║                                                                              ║${CL}
             ${BD}${CY}╠══════════════════════════════════════════════════════════════════════════════╣${CL}
-            ${BD}${CY}║${CL}                 ${BD}${GN}${ICON_LIGHTNING}${PR} SHARDBYTE COLLECTIVE SECURE OPERATIONS  ${GN}${ICON_LIGHTNING}                ${BD}${CY}║${CL}
+            ${BD}${CY}║${CL}                 ${BD}${BL}${ICON_LIGHTNING}${PR} SHARDBYTE COLLECTIVE SECURE OPERATIONS  ${BL}${ICON_LIGHTNING}                ${BD}${CY}║${CL}
             ${BD}${CY}╚══════════════════════════════════════════════════════════════════════════════╝${CL}"
     echo -e "$RULES${CL}\n"
 }
